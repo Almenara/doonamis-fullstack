@@ -52,7 +52,35 @@ cd doonamis
   cd ..
   ```
 
-### 3. Configura el archivo `.env` de Laravel
+---
+
+## Cómo ejecutar solo el frontend (Angular) **sin Docker**
+
+Si solo quieres trabajar con el frontend, puedes hacerlo fácilmente sin Docker:
+
+1. Entra en la carpeta `front`:
+   ```sh
+   cd front
+   ```
+
+2. Instala las dependencias:
+   ```sh
+   npm install
+   ```
+
+3. Inicia el servidor de desarrollo en el puerto 8000:
+   ```sh
+   npm start
+   ```
+   > Esto abrirá la aplicación Angular en [http://localhost:8000](http://localhost:8000)
+
+---
+
+## Ejecución completa con Docker (opcional)
+
+Si quieres levantar todo el entorno (frontend, backend y base de datos) con Docker, sigue estos pasos:
+
+### 1. Configura el archivo `.env` de Laravel
 
 Asegúrate de que el archivo `back/.env` tenga estos valores para la base de datos:
 
@@ -65,7 +93,7 @@ DB_USERNAME=doonamis_user
 DB_PASSWORD=doonamis_pass
 ```
 
-### 4. Levanta los contenedores
+### 2. Levanta los contenedores
 
 Desde la raíz del proyecto:
 
@@ -80,7 +108,7 @@ Esto descargará las imágenes necesarias, construirá los servicios y levantar�
 ## Acceso a los servicios
 
 - **Frontend (Angular):**  
-  [http://localhost](http://localhost)
+  [http://localhost:8000](http://localhost:8000)
 
 - **Backend (Laravel):**  
   [http://localhost:8080](http://localhost:8080)
@@ -120,10 +148,5 @@ Esto descargará las imágenes necesarias, construirá los servicios y levantar�
   ```sh
   docker compose restart nginx
   ```
-- Puedes acceder directamente al frontend en [http://localhost:4200](http://localhost:4200) y al backend en [http://localhost:8000](http://localhost:8000) si lo necesitas.
+- Puedes acceder directamente al frontend en [http://localhost:8000](http://localhost:8000) y al backend en [http://localhost:8080](http://localhost:8080) si lo necesitas.
 
----
-
-## Licencia
-
-MIT
