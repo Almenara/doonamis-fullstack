@@ -3,7 +3,8 @@ services:
     image: nginx:alpine
     container_name: doonamis_nginx
     ports:
-      - "8080:80"  # Backend
+      - "80:80"       # Frontend
+      - "8080:8080"   # Backend
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -15,15 +16,13 @@ services:
   front:
     build: ./front
     container_name: doonamis_front
-    expose:
-      - "8000"
     ports:
       - "8000:8000"
     volumes:
       - ./front:/app
       - /app/node_modules
     working_dir: /app
-    command: npm run start -- --host 0.0.0.0 --port 8000
+    command: npm run start -- --host 0.0.0.0
     networks:
       - doonamis_network
 
@@ -31,9 +30,7 @@ services:
     build: ./back
     container_name: doonamis_back
     expose:
-      - "80" 
-    ports:
-      - "8008:80"
+      - "80"
     depends_on:
       - mysql
     environment:
