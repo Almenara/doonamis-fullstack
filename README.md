@@ -32,7 +32,7 @@ doonamis/
 ### 1. Clona el repositorio
 
 ```sh
-git clone https://github.com/tuusuario/doonamis.git
+git clone https://github.com/Almenara/doonamis-fullstack
 cd doonamis
 ```
 
