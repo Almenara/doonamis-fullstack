@@ -1,0 +1,31 @@
+<div #os id="os" [@runOS]="computerOn ? 'on' : 'off'"  (@runOS.done)="offOS($event)" >
+    @if(systemReady){
+        @if(gameIsRunning){
+            <app-ohmummy></app-ohmummy>
+        } @else{
+        
+            <div [id]="'basic'">
+                <p class="text-left">
+                    &nbsp;Amstrad 64K Microcomputer (v1)
+                    <br />
+                    <br />
+                </p>
+                <p class="text-right">
+                    © 1985 Amstrad Consumer Electronics plc&nbsp;
+                    <br />
+                    and Locomotive Software Ltd.&nbsp;
+                </p>
+                <p>
+                    <br />
+                    BASIC 1.0
+                </p>
+                <p>
+                    <br />
+                    Ready
+                    <br />
+                    <span #commandLine></span><span id="cursor"></span>
+                </p>
+            </div>
+        }
+    }
+</div>

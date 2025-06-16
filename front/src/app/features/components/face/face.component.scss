@@ -1,0 +1,58 @@
+svg{
+    aspect-ratio: 17/9;
+    @media screen and (max-width: 768px) {
+        aspect-ratio: 9/16;        
+    }
+    .stroke {
+        stroke: #1d1d1b;
+        stroke-width: 2px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        &.none-stroke {
+            stroke: none;
+        }
+        &.red-stroke {
+            stroke: #D74544;
+        }
+        &.black-stroke {
+            stroke: #1d1d1b;
+            stroke-width: 0px;
+        }
+        &.blue-stroke {
+            stroke: #1F6DA6;
+        }
+        &.hover{
+            cursor: pointer;        
+            &.red-stroke{
+                stroke: #1F6DA6;
+            }
+            &.red-fill{
+                fill: #1F6DA6;
+            }
+            &.blue-stroke{
+                stroke: #D74544;
+            }
+            &.blue-fill{
+                fill: #D74544;
+            }
+        }
+    }
+    g{
+        .default-fill{
+            fill: #FEEDE0;
+        }
+        .red-fill{
+            fill: #D74544;
+        }
+        .blue-fill{
+            fill: #1F6DA6;
+        }
+    }
+    #title{
+        font-size: 5rem;
+        fill: #1F6DA6;
+        stroke-width: 2px;
+        stroke-linejoin: round;
+        stroke: #FEEDE0;
+    }
+}

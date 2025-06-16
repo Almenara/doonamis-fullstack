@@ -1,0 +1,44 @@
+<div id="computer" class="flex flex-col md:flex-row w-full justify-center items-stretch md:items-stretch md:gap-3">
+    <div id="monitor" [@fadeOutMonitor]="animationState">
+        <div id="frame" [@fadeOutMonitorInnerBorders]="animationState">
+            <div id="screen" (click)="fullScreenGame()" [@expandAnimation]="animationState">
+                <app-os [computerOn]="computerOn"></app-os>
+            </div>
+        </div>
+        <div id="foot" [@fadeOutMonitorInnerBorders]="animationState">
+            <div id="light" [ngClass]="{'on': computerOn}"></div>
+            <button id="power" (click)="computerOn = !computerOn" [ngClass]="{'on': computerOn}"></button>
+        </div>
+    </div>
+    <div class="flex flex-col justify-between">
+        <div id="title" class="flex flex-1 order-1 md:order-0" [@fadeOutPhrases]="animationState">
+            <h1>
+                <ng-content></ng-content>
+            </h1>
+        </div>
+        <div id="keyboard" class="flex flex-col order-0 md:order-1" [@fadeOutKeyboard]="animationState">
+            <div class="keys">
+                <div class="key" (click)="keyPressed()" *ngFor="let key of [].constructor(13)"></div>
+            </div>
+            <div class="keys">
+                <div class="key" (click)="keyPressed()" *ngFor="let key of [].constructor(13)"></div>
+            </div>
+            <div class="keys">
+                <div class="key" (click)="keyPressed()" *ngFor="let key of [].constructor(13)"></div>
+            </div>
+            <div class="keys">
+                <div class="key" (click)="keyPressed()" *ngFor="let key of [].constructor(3)"></div>
+                <div class="key space" (click)="keyPressed()" ></div>
+                <div class="key" (click)="keyPressed()" *ngFor="let key of [].constructor(5)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<svg width="0" height="0" >
+    <defs>
+        <clipPath id="screen-path" clipPathUnits="objectBoundingBox" style="padding:2px">
+            <path d="M 0,0.5 C 0,0 0,0 0.5,0 S 1,0 1,0.5 1,1 0.5,1 0,1 0,0.5 Z"/>
+        </clipPath>
+    </defs>
+</svg>
