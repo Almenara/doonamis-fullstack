@@ -29,6 +29,8 @@ services:
   back:
     build: ./back
     container_name: doonamis_back
+    volumes:
+      - ./back:/var/www
     expose:
       - "80"
     depends_on:
@@ -42,7 +44,6 @@ services:
       - DB_PASSWORD=doonamis_pass
     networks:
       - doonamis_network
-
   mysql:
     image: mysql:latest
     container_name: doonamis_mysql
