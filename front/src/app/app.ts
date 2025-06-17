@@ -13,9 +13,9 @@ import { AlertModal } from "./features/components/alert/alert.component";
     AlertModal
 ],
   styles: [`
-    @import '../styles/_color.scss';
-    @import '../styles/_typography.scss';
-    @import '../styles/_variables.scss';
+    @use '../styles/_color.scss' as *;
+    @use '../styles/_typography.scss' as *;
+    @use '../styles/_variables.scss' as *;
     :host{  
       min-width: 100dvw;
       min-height: 100dvh;
@@ -32,7 +32,7 @@ import { AlertModal } from "./features/components/alert/alert.component";
       justify-content: start;
       top: 0;
       min-height: $min-header-height;
-      z-index: 999; 
+      z-index: 99; 
     }
     main{
       background-color: $background-color;
@@ -49,11 +49,12 @@ import { AlertModal } from "./features/components/alert/alert.component";
       width: 100%;
       position: fixed;
       bottom: 0;
-      z-index: 899;
+      z-index: 89;
     }
   `],
   template: `
-  
+    <app-alert-modal />
+    
     <header class="px-[1rem] md:px-[2rem]">
       <app-header/>
     </header>
@@ -65,7 +66,6 @@ import { AlertModal } from "./features/components/alert/alert.component";
     <footer>
       <app-footer/>
     </footer>
-    <app-alert-modal />
   `,
   }
 )

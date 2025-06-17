@@ -1,5 +1,9 @@
-@import 'styles/color';
-@import 'styles/typography';
+@use "styles/_color.scss" as *;
+@use "styles/_typography.scss" as *;
+@use "styles/_variables.scss" as *;
+@use 'sass:color';
+
+@import "tailwindcss";
 
 html, body{
     display: flex;
@@ -21,4 +25,81 @@ h2{
     font-family: $text-font;
     font-weight: 100;
     color: $secondary-color;
+}
+label{
+    font-family: $text-font;
+    font-weight: 100;
+    color: $primary-color;
+    margin-bottom: 5px;
+}
+input, textarea, select{
+    font-family: $text-font;
+    font-weight: 100;
+    color: $primary-color;
+    background-color: $white;
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    &:focus{
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 5px color.adjust($primary-color, $lightness: 50%);
+    }
+    &::placeholder{
+        color: color.adjust($primary-color, $lightness: 20%);
+    }
+    &:disabled{
+        background-color: color.adjust($red, $lightness: 5%);
+        cursor: not-allowed;
+    }
+    &.invalid, &:invalid{
+        border-color: $error!important;
+        box-shadow: 0 0 5px color.adjust($error, $lightness: 30%)  !important;
+    }
+
+}
+small.error{
+    color: $error;
+    font-family: $text-font;
+    font-weight: 100;
+    margin-top: 5px;
+}
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $text-font;
+    font-weight: 100;
+    color: $white;
+    background-color: $secondary-color;
+    border: 1px solid color.adjust($secondary-color, $lightness: -10%);
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    svg{
+        display: none;
+    }
+    &:hover{
+        background-color: color.adjust($secondary-color, $lightness: -10%);
+    }
+    &:disabled{
+        background-color: color.adjust($secondary-color, $lightness: 20%);
+        cursor: not-allowed;
+    }
+    &.loading{
+        svg{
+            display: block;
+        }
+    }
+}
+a{
+    color: $secondary-color;
+    text-decoration: none;
+    
+    &:hover{
+        text-decoration: underline;
+    }
 }

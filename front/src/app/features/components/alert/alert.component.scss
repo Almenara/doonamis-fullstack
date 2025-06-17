@@ -1,18 +1,32 @@
 
-@import "../../../../styles/color.scss";
+@use 'sass:color';
+@use "../../../../styles/_typography.scss" as *;
+
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
 .alert{
+    display: flex;
+    align-items: center;
+    align-self: center;
     width: calc(100% - 16px);
     padding: 16px 20px;
     max-width: 560px;
     position: absolute!important;
     display: flex;
     align-self: center;
-    top: 110px;
+    top: -100px;
     min-height: 55px;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     color: $black;
     animation: animation-alert 700ms ease-in-out forwards;
+    font-family: $text-font;
+    z-index: 9999;
     &.fade,
     &.fade:not(.show){
         opacity: 1!important;
@@ -23,34 +37,38 @@
         top: 0px!important;
     }
     &.alert-success{
-        background-color:  green;//$green;
+        background-color: $green;
+        border: 1px solid color.adjust($green, $lightness: -20%);
     }
     &.alert-danger{
         background-color: $error;
+        border: 1px solid color.adjust($error, $lightness: -20%);
     }
     &.alert-info{
         background-color: $blue;
+        border: 1px solid color.adjust($blue, $lightness: -20%);
     }
     &.alert-warning{
         background-color: $yellow;
+        border: 1px solid color.adjust($yellow, $lightness: -20%);
     }
     @keyframes animation-alert {
         0% {
-            top: 0px;
+            top: -100px;
         }
         50% {
-            top: 120px;
+            top: 60px;
         }
         100% {
-            top: 110px;
+            top: 50px;
         }
     }
     @keyframes animation-alert-fade {
         0% {
-            top: 110px;
+            top: 50px;
         }
         100% {
-            top: 0px;
+            top: -100px;
         }
     }
     span.text{
@@ -72,17 +90,17 @@
         justify-content: space-between;
         span{
             display: block;
-            height: 3px;
+            height: 2px;
             border-radius: 3px;
             background-color: $black;
             opacity: 0;
             &:first-child{
                 opacity: 1;
-                transform: rotate(45deg) translate(9px, 10px);
+                transform: rotate(45deg) translate(9px, 11px);
             }
             &:last-child{
                 opacity: 1;
-                transform: rotate(-45deg) translate(9px, -10px);
+                transform: rotate(-45deg) translate(9px, -11px);
             }
         }
         &:hover{

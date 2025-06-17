@@ -1,0 +1,20 @@
+@use 'sass:color';
+@use "../../../../styles/_typography.scss" as *;
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80dvw;
+    max-width: 500px;
+    padding: 20px 20px;
+    border-radius: 10px;
+    background-color: color.adjust($background-color, $lightness: 2%);
+    box-shadow: 0 4px 8px rgba($shadow-color, 0.1);
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}

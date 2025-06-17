@@ -1,6 +1,6 @@
-@import '../../../../styles/_variables.scss';
-@import '../../../../styles/_color.scss';
-@import '../../../../styles/_typography.scss';
+@use '../../../../styles/_variables.scss' as *;
+@use '../../../../styles/_color.scss' as *;
+@use '../../../../styles/_typography.scss' as *;
 
 
 #title{

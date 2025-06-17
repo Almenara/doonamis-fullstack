@@ -1,7 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap&family=Sixtyfour+Convergence&display=swap');
-$title-font: "Martian Mono", monospace;
-$text-font: "Bodoni Moda", serif;
-$os-font: "Sixtyfour Convergence", sans-serif;
+$white:  #fff6e7;
+$black:  #232425;
+$red:    #C66043;
+$green:  #daf299;
+$error:  #D33F3F;
+$blue:   #b3d4fc;
+$yellow: #f2e6c4;
+
+
+// Color background
+$background-color:  #fff6e7;
+// Main colors
+$primary-color:     #232425;
+$secondary-color:   #C66043;
+
+$shadow-color:      #232425;
+
+$title-font: "Bodoni Moda", serif;
+$text-font: "Martian Mono", monospace;
 
 h1{
     font-size: 3rem;
@@ -13,7 +29,7 @@ h1{
 h2{
     font-size: 1.5rem;
     font-weight: 100;
-    font-family: $text-font;
+    font-family: $title-font;
     color: $primary-color;
     font-variation-settings: "wdth" 112;
     font-style: italic;
