@@ -32,6 +32,7 @@ class AuthController extends Controller
         
         return $this->success(
             [
+                'message' => ['Inicio de sesión exitoso.'],
                 'user'  => new UserResource($user),
                 'token' => $user->createToken(request('email'))->plainTextToken
             ],

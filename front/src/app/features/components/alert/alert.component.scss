@@ -1,0 +1,135 @@
+
+@import "../../../../styles/color.scss";
+.alert{
+    width: calc(100% - 16px);
+    padding: 16px 20px;
+    max-width: 560px;
+    position: absolute!important;
+    display: flex;
+    align-self: center;
+    top: 110px;
+    min-height: 55px;
+    border: none;
+    border-radius: 25px;
+    color: $black;
+    animation: animation-alert 700ms ease-in-out forwards;
+    &.fade,
+    &.fade:not(.show){
+        opacity: 1!important;
+        animation: animation-alert-fade 300ms ease-in-out forwards!important;
+    }
+    &.show{
+        opacity: 1!important;
+        top: 0px!important;
+    }
+    &.alert-success{
+        background-color:  green;//$green;
+    }
+    &.alert-danger{
+        background-color: $error;
+    }
+    &.alert-info{
+        background-color: $blue;
+    }
+    &.alert-warning{
+        background-color: $yellow;
+    }
+    @keyframes animation-alert {
+        0% {
+            top: 0px;
+        }
+        50% {
+            top: 120px;
+        }
+        100% {
+            top: 110px;
+        }
+    }
+    @keyframes animation-alert-fade {
+        0% {
+            top: 110px;
+        }
+        100% {
+            top: 0px;
+        }
+    }
+    span.text{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: calc(100% - 50px);
+    }
+    .close-alert{
+        position: absolute;
+        top: 13px;
+        right: 13px;
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        span{
+            display: block;
+            height: 3px;
+            border-radius: 3px;
+            background-color: $black;
+            opacity: 0;
+            &:first-child{
+                opacity: 1;
+                transform: rotate(45deg) translate(9px, 10px);
+            }
+            &:last-child{
+                opacity: 1;
+                transform: rotate(-45deg) translate(9px, -10px);
+            }
+        }
+        &:hover{
+            background-color: transparent;
+            span{
+                background-color: $black;
+            }
+        }
+    }
+    &.alert-success{
+        .close-alert{
+            &:hover{
+                background-color: transparent;
+                span{
+                    background-color: $black;
+                }
+            }
+        }
+    }
+    &.alert-danger{
+        .close-alert{
+            &:hover{
+                background-color: transparent;
+                span{
+                    background-color: $black;
+                }
+            }
+        }
+    }
+    &.alert-info{
+        .close-alert{
+            &:hover{
+                background-color: transparent;
+                span{
+                    background-color: $black;
+                }
+            }
+        }
+    }
+    &.alert-warning{
+        .close-alert{
+            &:hover{
+                background-color: transparent;
+                span{
+                    background-color: $black;
+                }
+            }
+        }
+    }
+} 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Header } from './core/components/header/header.component';
 import { Footer } from './core/components/footer/footer.component';
 import { Main } from "./core/components/main/main.component";
-import { AlertModal } from "./features/components/alert/alert.component";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,6 @@ import { AlertModal } from "./features/components/alert/alert.component";
     Header,
     Footer,
     Main,
-    AlertModal
 ],
   styles: [`
     @import '../styles/_color.scss';
@@ -65,10 +63,10 @@ import { AlertModal } from "./features/components/alert/alert.component";
     <footer>
       <app-footer/>
     </footer>
-    <app-alert-modal />
+    
   `,
   }
 )
-export class App {
-  protected title = 'front';
+export class AppComponent {
+  public title = 'Alberto Almenara';
 }
