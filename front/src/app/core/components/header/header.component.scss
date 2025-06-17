@@ -1,0 +1,78 @@
+@import '../../../../styles/_variables.scss';
+@import '../../../../styles/_color.scss';
+@import '../../../../styles/_typography.scss';
+
+
+#title{
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    padding-bottom: 0;
+    cursor: pointer;
+    &:hover{
+        h1:not(.subtitle){
+            font-variation-settings: "wght" 600;
+        }
+    }
+    @media (hover: none) {
+        &:hover{
+            h1:not(.subtitle){
+                font-variation-settings: "wght" 100;
+            }
+        }
+    }
+    h1{
+        opacity: 0;
+        font-size: 1.5rem;
+        font-weight: 200;
+        color: $primary-color;
+        padding: 0;
+        animation: appear .3s forwards;
+        animation-delay: 1.5s;
+        line-height: 2.2rem;
+        transition: all .5s;
+        font-variation-settings: "wght" 100;
+        &.subtitle{
+            font-size: 1.5rem;
+            font-weight: 100;
+            font-style: italic;
+            color: $primary-color;
+            padding: 0;
+            animation: appear .3s forwards;
+            animation-delay: 1.6s;
+            line-height: 1.4rem;
+            &:hover{
+                font-variation-settings: "wght" 100;
+            }
+        }
+    }
+    &::before{
+        content: '';
+        width: 0;
+        height: 2px;
+        background-color: $primary-color;
+        animation: expand-line .5s forwards;
+        animation-delay: 1s;
+        border-radius: 4px;
+    }
+}
+
+@keyframes appear{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes expand-line{
+    0%{
+        width: 0;
+    }
+    100%{
+        width: 100%;
+    }
+}

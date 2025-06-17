@@ -1,0 +1,11 @@
+<div [id]="'menu'" [ngClass]="{'opened': commonService.menuOpen(), 'touched': touched}"> 
+    <nav [id]="'burger'" (click)="openMenu()" [ngClass]="{'touched': touched}">
+        <a [routerLink]="'about-me'" (click)="closeMenu($event)"><h2 class="option">Sobre mí</h2></a>
+        <a [routerLink]="'about-me'" (click)="closeMenu($event)"><h2 class="option">Proyectos</h2></a>
+        <a [routerLink]="'about-me'" (click)="closeMenu($event)"><h2 class="option">Contacto</h2></a>
+    </nav> 
+    <div [id]="'close-button'" (click)="closeMenu($event)">
+        <div class="line top"></div>
+        <div class="line bottom"></div>
+    </div>
+</div>
