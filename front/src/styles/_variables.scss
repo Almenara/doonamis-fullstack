@@ -7,14 +7,12 @@ $error:  #D33F3F;
 $blue:   #b3d4fc;
 $yellow: #f2e6c4;
 
+$background-color:  $white;
 
-// Color background
-$background-color:  #fff6e7;
-// Main colors
-$primary-color:     #232425;
-$secondary-color:   #C66043;
+$primary-color:     $black;
+$secondary-color:   $red;
 
-$shadow-color:      #232425;
+$shadow-color:      $black;
 
 $title-font: "Bodoni Moda", serif;
 $text-font: "Martian Mono", monospace;

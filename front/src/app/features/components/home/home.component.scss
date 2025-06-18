@@ -1,6 +1,4 @@
-@use '../../../../styles/variables.scss' as *;
-@use '../../../../styles/color.scss' as *;
-@use '../../../../styles/typography.scss' as *;
+@use '../../../../styles/_variables.scss' as *;
 
 article{
     background-color: $background-color;

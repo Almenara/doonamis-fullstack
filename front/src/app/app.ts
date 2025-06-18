@@ -13,8 +13,7 @@ import { AlertModal } from "./features/components/alert/alert.component";
     AlertModal
 ],
   styles: [`
-    @use '../styles/_color.scss' as *;
-    @use '../styles/_typography.scss' as *;
+    @use '../styles/_variables.scss' as *;
     :host{  
       min-width: 100dvw;
       min-height: 100dvh;
