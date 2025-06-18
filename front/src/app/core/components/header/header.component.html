@@ -9,7 +9,9 @@
             <span class="inline-block">Alberto Almenara</span>
         </h1>
     </div>
-    <div class="flex flex-row items-center">
-        <button class="bt-sm bt-white" (click)="logout()">Logout</button>
-    </div>
+    @if(isLogged){
+        <div class="flex flex-row items-center">
+            <button class="bt-sm bt-white" (click)="logout()">Logout</button>
+        </div>
+    }
 </div>

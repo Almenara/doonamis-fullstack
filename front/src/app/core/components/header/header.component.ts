@@ -1,8 +1,9 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +11,24 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class Header {
+export class Header implements OnInit {
   
   private authService: AuthService = inject(AuthService);
+  // varioable de subscription para saber si el usuario esta logueado
+  private isLoggedInSubscription!: Subscription;
   public loading = false;
+  public isLogged = false;
+
+  ngOnInit(): void {
+    this.isLoggedInSubscription =this.authService.isLoggedIn.subscribe((logged:boolean) => {
+      this.isLogged = logged;
+    });
+  }
 
   logout(): void {
     this.loading = true;
     this.authService.logout()
-  }  
+  }
+
   
 }
