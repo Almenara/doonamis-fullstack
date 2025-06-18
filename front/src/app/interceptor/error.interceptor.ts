@@ -23,8 +23,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 
         let errorMessage = err.error.message || err.statusText;
 
+        //comprabamos si la llamada es para saber si el ya esta logueado
+        if (err.status === 401 && request.url.includes('/auth/check-login')) {
+          // Si la llamada es para comprobar si el usuario está logueado, no hacemos nada
+          return throwError(() => new Error(errorMessage));
+        }
         
-        if ([401, 403].includes(err.status) /*&& this.authService.isLoggedIn.getValue()*/) {
+        if ([401, 403].includes(err.status)) {
           
           if (err.status === 401) {
             errorMessage = 'No tienes permiso para acceder a este recurso. Por favor, inicia sesión de nuevo.';
