@@ -2,13 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NavigationEnd, Router, Event } from '@angular/router';
 
-import { BehaviorSubject, lastValueFrom, Observable, tap, throwError,} from 'rxjs';
+import { BehaviorSubject, Observable, tap, throwError,} from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment.development';
 import { User } from './../models/user';
 import { UserLoginResponse } from './../models/auth.d';
-import { NgxPermissionsService } from 'ngx-permissions';
 
 export interface RecoverPasswords {
   password: string;
@@ -30,7 +29,6 @@ export class AuthService {
 
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
-  private ngxPermissionsService: NgxPermissionsService = inject(NgxPermissionsService);
 
   constructor(
   ) {
@@ -47,10 +45,7 @@ export class AuthService {
     }
   }
 
-  login(user: {
-    email: string;
-    password: string;
-  }): Observable<UserLoginResponse> {
+  login(user: { email: string; password: string; }): Observable<UserLoginResponse> {
     return this.http.post<UserLoginResponse>(`${environment.BACKEND_BASE_URL}/auth/login`, {...user})
       .pipe(
         tap((res) => {
@@ -67,23 +62,33 @@ export class AuthService {
       )
   }
 
-  getUserLogged(): Promise<{ status: string; data: User }> {
-    return lastValueFrom(
-      this.http
-        .get<{ status: string; data: User }>(`${environment.BACKEND_BASE_URL}/user`)
-        .pipe(
-          tap((res) => {
-            localStorage.setItem('user', JSON.stringify(res.data));
-          }),
-          catchError((err) => {
-            localStorage.removeItem('user');
-            localStorage.removeItem('access_token');
-            this.router.navigate(['/login']);
-            this.ngxPermissionsService.flushPermissions();
-            return throwError(() => err);
-          })
-        )
-    );
+  checkLogin() {
+    // Comprbamos si tenemos un token en localStorage
+    if (!localStorage.getItem('access_token')) {
+      this._isLoggedIn.next(false);
+      return;
+    }
+    this.http
+      .get<{ status: string; data: User }>(`${environment.BACKEND_BASE_URL}/auth/check-login`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        tap((res) => {
+          console.log('checkLogin', res);
+        }),
+        catchError((err) => {
+          localStorage.removeItem('user');
+          localStorage.removeItem('access_token');
+          this.router.navigate(['/login']);
+          return throwError(() => err);
+      })
+    ).subscribe();
   }
 
   logout() {
@@ -103,7 +108,6 @@ export class AuthService {
           localStorage.removeItem('user');
           localStorage.removeItem('access_token');
           this.router.navigate(['/login']);
-          this.ngxPermissionsService.flushPermissions();
         },
         error: (err) => {
           console.log(err);

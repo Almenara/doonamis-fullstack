@@ -40,6 +40,17 @@ class AuthController extends Controller
         );
     }
 
+    public function checkLogin(Request $request)
+    {
+        return $this->success(
+            [
+                'message' => ['Bienvenido de nuevo.'],
+                'user'  => new UserResource($request->user())
+            ],
+            Response::HTTP_OK
+        );
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
