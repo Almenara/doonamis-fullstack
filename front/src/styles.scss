@@ -1,6 +1,5 @@
 @use "styles/_color.scss" as *;
 @use "styles/_typography.scss" as *;
-@use "styles/_variables.scss" as *;
 @use 'sass:color';
 
 @import "tailwindcss";
@@ -12,19 +11,49 @@ html, body{
     padding: 0;
     margin: 0;
 }
+header{
+    display: flex;
+    width: 100%;
+    position: fixed;
+    background-color: $background-color;
+    top: 0;
+    height: auto;
+    z-index: 99; 
+}
+main{
+    background-color: $background-color;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-width: 100dvw;
+    flex: 1;
+}
+footer{
+    background-color: $background-color;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 89;
+    }
 .title{
     font-family: $title-font;
 }
 h1{
     font-size: 3rem;
+    font-weight: 100;
     font-family: $title-font;
     color: $primary-color;
+    font-variation-settings: "wdth" 112;
 }
 h2{
-    font-size: 2rem;
-    font-family: $text-font;
+    font-size: 1.5rem;
     font-weight: 100;
-    color: $secondary-color;
+    font-family: $title-font;
+    color: $primary-color;
+    font-variation-settings: "wdth" 112;
+    font-style: italic;
 }
 label{
     font-family: $text-font;
@@ -92,6 +121,18 @@ button{
     &.loading{
         svg{
             display: block;
+        }
+    }
+    &.bt-sm{
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+    &.bt-white{
+        background-color: $white;
+        color: $primary-color;
+        border: 1px solid color.adjust($primary-color, $lightness: -10%);
+        &:hover{
+            background-color: color.adjust($white, $lightness: -5%);
         }
     }
 }

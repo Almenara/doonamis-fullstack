@@ -1,42 +1,23 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonService } from '../../../services/common.service';
-import { Subscription } from 'rxjs';
-import { Menu } from "./components/menu/menu.component";
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, Menu, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class Header implements OnInit {
+export class Header {
   
-  private commonService: CommonService    = inject(CommonService);
-  private subscriptions: Subscription     = new Subscription();
+  private authService: AuthService = inject(AuthService);
+  public loading = false;
 
-  public changeHeaderAnimation: number[]  = [];
-  public changingHeader                   = false;
-
-  ngOnInit(): void {
-    this.subscriptions.add(this.commonService.addHeader().subscribe(() => {
-      this.animateHeader();
-    }))
-  }
-
-  public animateHeader() {
-    if(this.changingHeader) return;
-    this.changingHeader = true;
-    setTimeout(() => {
-      this.changeHeaderAnimation.push(this.changeHeaderAnimation.length + 1);
-      this.changingHeader = false;
-    }, this.changeHeaderAnimation.length > 0 ? 1000 : 0);
-    setTimeout(() => {
-      // borramos el primer elemento del array
-      if(this.changeHeaderAnimation.length > 1)
-      this.changeHeaderAnimation.shift();
-    }, 2500);
-  }
+  logout(): void {
+    this.loading = true;
+    this.authService.logout()
+  }  
+  
 }

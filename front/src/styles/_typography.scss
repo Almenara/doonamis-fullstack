@@ -18,19 +18,3 @@ $shadow-color:      #232425;
 
 $title-font: "Bodoni Moda", serif;
 $text-font: "Martian Mono", monospace;
-
-h1{
-    font-size: 3rem;
-    font-weight: 100;
-    font-family: $title-font;
-    color: $primary-color;
-    font-variation-settings: "wdth" 112;
-}
-h2{
-    font-size: 1.5rem;
-    font-weight: 100;
-    font-family: $title-font;
-    color: $primary-color;
-    font-variation-settings: "wdth" 112;
-    font-style: italic;
-}
