@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NavigationEnd, Router, Event } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { BehaviorSubject, Observable, tap, throwError,} from 'rxjs';
-import { catchError, filter } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment.development';
 import { User } from './../models/user';
@@ -18,28 +18,20 @@ export interface RecoverPasswords {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  public lastUrl!: string | null;
-
+  private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   get isLoggedIn(): BehaviorSubject<boolean> {
     return this._isLoggedIn;
+  }
+
+  private _user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  get user(): BehaviorSubject<User | null> {
+    return this._user;
   }
 
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
-  constructor(
-  ) {
-    this.router.events
-      .pipe(
-        filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
-      )
-      .subscribe((event: NavigationEnd) => {
-        this.lastUrl = event.urlAfterRedirects;
-      }
-    );
+  constructor() {
     if (localStorage.getItem('access_token')) {
       this._isLoggedIn.next(true);
     }
@@ -49,17 +41,19 @@ export class AuthService {
     return this.http.post<UserLoginResponse>(`${environment.BACKEND_BASE_URL}/auth/login`, {...user})
       .pipe(
         tap((res) => {
-          if (this.lastUrl && this.lastUrl !== '/login') {
-            this.router.navigate([this.lastUrl]);
-            this.lastUrl = null;
-          } else {
-            this.router.navigate(['/']);
-          }
-          localStorage.setItem('user', JSON.stringify(res.data.user));
+          this.router.navigate(['/']);
+          this.saveUserLoggedIn(res.data.user);
           localStorage.setItem('access_token', res.data.token);
           this._isLoggedIn.next(true);
         })
       )
+  }
+
+  private saveUserLoggedIn(user: User) {
+    // Guardamos el usuario en localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+    // Actualizamos el BehaviorSubject
+    this._user.next(user);
   }
 
   checkLogin() {
@@ -69,7 +63,7 @@ export class AuthService {
       return;
     }
     this.http
-      .get<{ status: string; data: User }>(`${environment.BACKEND_BASE_URL}/auth/check-login`,
+      .get<UserLoginResponse>(`${environment.BACKEND_BASE_URL}/auth/check-login`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +74,7 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          console.log('checkLogin', res);
+          this.saveUserLoggedIn(res.data.user);
         }),
         catchError((err) => {
           localStorage.removeItem('user');

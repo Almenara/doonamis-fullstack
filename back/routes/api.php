@@ -16,6 +16,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('/{id}', [\App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+    Route::delete('/{id}', [\App\Http\Controllers\UserController::class, 'softDelete'])->name('users.softDelete');
     // Additional user routes can be added here
 });
 
