@@ -1,0 +1,29 @@
+<article class="container flex flex-col p-4 md:p-8">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(user of users$; track user.id) {
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.attributes.name }} {{user.attributes.last_name}}</td>
+                <td>{{ user.attributes.email }}</td>
+                <td>
+                    @if(selfUser.id !== user.id) {
+                        <button class="bt-sm" (click)="deleteUser(user.id)">Delete</button>
+                    }
+                </td>
+            </tr>
+        } @empty {
+            <tr>
+                <td colspan="4">No users found.</td>
+            </tr>
+        }
+    </table>
+</article>

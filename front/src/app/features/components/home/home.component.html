@@ -1,3 +1,31 @@
-<article>
-    
+<article class="container flex flex-col p-4 md:p-8">
+    <h1 class="text-2xl font-bold mb-4">Usuarios</h1>
+    <div class="options flex flex-row flex-wrap gap-4 mt-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Listado</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Listado de todos los usuarios registrados en el sistema.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a class="btn" [routerLink]="['/users']">Entrar</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Importación</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Importación de usuarios desde un fichero CSV. El fichero debe tener el formato adecuado y contener los campos necesarios.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a class="btn" [routerLink]="['/import-users']">Entrar</a>
+            </div>
+        </div>
+    </div>
 </article>

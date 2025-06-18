@@ -25,6 +25,16 @@ class UserController extends Controller
         );
     }
 
+    public function indexSoftDeleted()
+    {
+        $users = User::withTrashed()->get();
+
+        return $this->success(
+            UserResource::collection($users),
+            Response::HTTP_OK
+        );
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -63,6 +73,17 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function softDelete(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return $this->success(
+            ['message' => ['Usuario eliminado correctamente.']],
+            Response::HTTP_OK
+        );
     }
 
     /**
