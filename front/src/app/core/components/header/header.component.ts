@@ -4,10 +4,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { Loading } from "../../../shared/loading/loading";
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, Loading],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -27,7 +28,14 @@ export class Header implements OnInit {
 
   logout(): void {
     this.loading = true;
-    this.authService.logout()
+    this.authService.logout().subscribe({
+      next: () => {
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
 
   

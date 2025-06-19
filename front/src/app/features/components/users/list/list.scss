@@ -1,6 +1,12 @@
 @use '../../../../../styles/variables' as *;
 @use 'sass:color';
-
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    
+}
 table {
     width: 100%;
     border-radius: 10px;
@@ -11,9 +17,9 @@ table {
             background-color: color.adjust($secondary-color, $lightness: 35%);
             border-bottom: color.adjust($secondary-color, $lightness: 25%) 2px solid;
         }
+        text-align: left;
     }
     th, td {
-        text-align: left;
         padding: 8px;
     }
     tr{

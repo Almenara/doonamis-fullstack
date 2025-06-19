@@ -98,6 +98,7 @@ button{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem; 
     font-family: $text-font;
     font-weight: 100;
     color: $white;
@@ -107,7 +108,7 @@ button{
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    svg{
+    svg, app-loading{
         display: none;
     }
     &:hover{
@@ -118,7 +119,7 @@ button{
         cursor: not-allowed;
     }
     &.loading{
-        svg{
+        svg, app-loading{
             display: block;
         }
     }
