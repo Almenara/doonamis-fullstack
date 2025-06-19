@@ -17,7 +17,7 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('/{id}', [\App\Http\Controllers\UserController::class, 'show'])->name('users.show');
     Route::delete('/{id}', [\App\Http\Controllers\UserController::class, 'softDelete'])->name('users.softDelete');
-    // Additional user routes can be added here
+    Route::post('import-csv', [\App\Http\Controllers\UserController::class, 'importCSV'])->name('users.importCSV');
 });
 
 

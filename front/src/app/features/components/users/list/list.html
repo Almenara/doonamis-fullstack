@@ -7,16 +7,19 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Email</th>
-                <th class="text-right">Actions</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th class="text-right">Acciones</th>
             </tr>
         </thead>
         <tbody>
             @if(loading) {
                 <tr>
                     <td colspan="4">
-                        <app-loading class="pr-2" /> Loading users...
+                        <app-loading class="pr-2" /> Cargando usuarios...
                     </td>
                 </tr>
             }
@@ -24,15 +27,18 @@
                 @for(user of users$; track user.id) {
                     <tr>
                         <td>{{ user.id }}</td>
-                        <td>{{ user.attributes.name }} {{user.attributes.last_name}} @if(selfUser.id === user.id) { (Tú) }</td>
+                        <td>{{ user.attributes.name }} @if(selfUser.id === user.id) { (Tú) }</td>
+                        <td>{{ user.attributes.last_name }}</td>
+                        <td>{{ user.attributes.phone }}</td>
                         <td>{{ user.attributes.email }}</td>
+                        <td>{{ user.attributes.address }}</td>
                         <td class="flex justify-end gap-2">
                             @if(selfUser.id !== user.id) {
                                 <button class="bt-sm" [disabled]="deleting === user.id" [ngClass]="{'loading': deleting === user.id}" (click)="deleteUser(user.id)">
                                     @if(deleting === user.id) {
-                                        <app-loading /> Deleting...
+                                        <app-loading /> Borrando
                                     } @else {
-                                        <app-loading /> Delete
+                                        <app-loading /> Borrar
                                     }
                                 </button>
                             }
@@ -40,8 +46,8 @@
                     </tr>
                 } @empty {
                     <tr>
-                        <td colspan="4">No users found.
-                            <app-loading />
+                        <td colspan="4">
+                            No se han encontrado usuarios.
                         </td>
                     </tr>
                 }

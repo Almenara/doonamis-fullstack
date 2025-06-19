@@ -24,14 +24,12 @@ export class Login {
   private authService: AuthService    = inject(AuthService);
   private alertService: AlertService  = inject(AlertService);
   private router: Router = inject(Router);
-  
-
   private fb = inject(FormBuilder);
+ 
   public loginForm = this.fb.group({
     email:    ['admin@admin.com',[Validators.required, Validators.email]],
     password: ['12345', [Validators.required, Validators.minLength(5)]]
   });
-
   public loading = false;
 
   public onSubmit(): void {

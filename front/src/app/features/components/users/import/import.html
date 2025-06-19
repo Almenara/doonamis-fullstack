@@ -1,1 +1,20 @@
-<p>import works!</p>
+<article class="container flex items-center flex-col p-4 md:p-8">
+    <div class="flex flex-row justify-between w-full items-center mb-4">
+        <h2 class="text-2xl font-bold">Importar usuarios</h2>
+        <button class="bt-sm bt-white" [routerLink]="['../list']">Lista de usuarios</button>
+    </div>
+
+    <div id="form-container" class="pt-6">
+        <div class="card-body">
+            <div class="flex flex-col p-6">
+                <div class="file-upload flex flex-col gap-4">
+                    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                    {{fileName || "Selecciona un archivo CSV"}} 
+                    <button color="primary" accept=".csv" class="upload-btn" [disabled]="loading" [ngClass]="{'loading' : loading}" (click)="fileUpload.click()">
+                        <app-loading/> Subir archivo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
