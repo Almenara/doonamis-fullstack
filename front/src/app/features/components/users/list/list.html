@@ -1,29 +1,50 @@
 <article class="container flex flex-col p-4 md:p-8">
+    <div class="flex flex-row justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Lista de usuarios</h2>
+        <button class="bt-sm bt-white" [routerLink]="['../import']">Subir CSV</button>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
-        @for(user of users$; track user.id) {
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.attributes.name }} {{user.attributes.last_name}}</td>
-                <td>{{ user.attributes.email }}</td>
-                <td>
-                    @if(selfUser.id !== user.id) {
-                        <button class="bt-sm" (click)="deleteUser(user.id)">Delete</button>
-                    }
-                </td>
-            </tr>
-        } @empty {
-            <tr>
-                <td colspan="4">No users found.</td>
-            </tr>
-        }
+            @if(loading) {
+                <tr>
+                    <td colspan="4">
+                        <app-loading class="pr-2" /> Loading users...
+                    </td>
+                </tr>
+            }
+            @else{
+                @for(user of users$; track user.id) {
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.attributes.name }} {{user.attributes.last_name}} @if(selfUser.id === user.id) { (Tú) }</td>
+                        <td>{{ user.attributes.email }}</td>
+                        <td class="flex justify-end gap-2">
+                            @if(selfUser.id !== user.id) {
+                                <button class="bt-sm" [disabled]="deleting === user.id" [ngClass]="{'loading': deleting === user.id}" (click)="deleteUser(user.id)">
+                                    @if(deleting === user.id) {
+                                        <app-loading /> Deleting...
+                                    } @else {
+                                        <app-loading /> Delete
+                                    }
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="4">No users found.
+                            <app-loading />
+                        </td>
+                    </tr>
+                }
+            }
     </table>
 </article>

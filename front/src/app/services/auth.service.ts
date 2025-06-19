@@ -85,9 +85,9 @@ export class AuthService {
     ).subscribe();
   }
 
-  logout() {
-    this.http
-      .post(`${environment.BACKEND_BASE_URL}/auth/logout`, {},
+  logout(): Observable<void> {
+    return this.http
+      .post<void>(`${environment.BACKEND_BASE_URL}/auth/logout`, {},
         {
           headers: {
             'Content-Type': 'application/json',
@@ -96,16 +96,16 @@ export class AuthService {
           withCredentials: true,
         }
       )
-      .subscribe({
-        next: () => {
+      .pipe(
+        tap(() => {
           this._isLoggedIn.next(false);
           localStorage.removeItem('user');
           localStorage.removeItem('access_token');
           this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      });
+        }),
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
   }
 }

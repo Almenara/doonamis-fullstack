@@ -11,7 +11,9 @@
     </div>
     @if(isLogged){
         <div class="flex flex-row items-center">
-            <button class="bt-sm bt-white" (click)="logout()">Logout</button>
+            <button class="bt-sm bt-white" [disabled]="loading" [ngClass]="{'loading': loading}" (click)="logout()">
+                <app-loading [size]="20" />Logout
+            </button>
         </div>
     }
 </div>

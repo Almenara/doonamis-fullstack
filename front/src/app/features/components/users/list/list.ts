@@ -1,13 +1,21 @@
-import { AuthService } from './../../../../services/auth.service';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
-import { User } from '../../../../models/user';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+import { User } from '../../../../models/user';
+import { UserService } from '../../../../services/user.service';
+import { AuthService } from './../../../../services/auth.service';
+import { AlertService } from '../../../../services/alert.service';
+import { Loading } from '../../../../shared/loading/loading';
 
 @Component({
   selector: 'app-user-list',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    Loading
+  ],
   templateUrl: './list.html',
   styleUrl: './list.scss'
 })
@@ -15,8 +23,12 @@ export class UserList implements OnInit, OnDestroy {
 
   public users$: User[] = [];
   public selfUser!: User;
+  public loading = true;
+  public deleting: number | null = null; // Track which user is being deleted
+
   private userService = inject(UserService);
   private authService = inject(AuthService);
+  private alertService = inject(AlertService);
   private subscriptions: Subscription = new Subscription();
 
   ngOnInit() {
@@ -31,12 +43,10 @@ export class UserList implements OnInit, OnDestroy {
           next: (user) => {
             if (user) {
               this.selfUser = user;
-            } else {
-              console.error('No user found in auth service');
-            }
+            } 
           },
-          error: (error) => {
-            console.error('Error getting user from auth service:', error);
+          error: () => {
+            this.alertService.error('Ha ocurrido un error al obtener el usuario', { autoClose: true, keepAfterRouteChange: true });
           }
         })
       );
@@ -45,11 +55,12 @@ export class UserList implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.userService.getUsers().subscribe({
         next: (users) => {
-          console.log('Users loaded:', users);
           this.users$ = users;
+          this.loading = false;
         }
-        , error: (error) => {
-          console.error('Error loading users:', error);
+        , error: () => {
+          this.alertService.error('Ha ocurrido un error al obtener los usuarios', { autoClose: true, keepAfterRouteChange: true });
+          this.loading = false;
         }
       })
     );
@@ -59,11 +70,17 @@ export class UserList implements OnInit, OnDestroy {
   }
   
   deleteUser(id: number) {
+    this.deleting = id;
     this.subscriptions.add(
       this.userService.deleteUser(id).subscribe({
         next: () => {
-          console.log('User deleted successfully');
+          this.alertService.success('Usuario eliminado correctamente', { autoClose: true, keepAfterRouteChange: true });
           this.users$ = this.users$.filter(user => user.id !== id);
+          this.deleting = null;
+        },
+        error: () => {
+          this.alertService.error('Ha ocurrido un error al eliminar el usuario', { autoClose: true, keepAfterRouteChange: true });
+          this.deleting = null;
         }
       })
     );
