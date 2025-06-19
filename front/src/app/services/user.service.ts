@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { environment } from '../../environments/environment.development';
 import { User } from './../models/user';
+import { HttpImport } from '../models/httpImport';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +35,22 @@ export class UserService {
   public restoreUser(user: User): Observable<void> {
     return this.http.patch<void>(`${environment.BACKEND_BASE_URL}/users/restore/${user.id}`, {});
   }
+  public uploadCSV(file: File): Observable<HttpEvent<HttpImport>> {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log('Subiendo archivo:', file);
+
+    return this.http.post<HttpImport>(`${environment.BACKEND_BASE_URL}/users/import-csv`, formData, {
+      reportProgress: true,
+      observe: 'events',
+      headers: {
+        'Accept': 'application/json',
+      },
+      withCredentials: true
+    })
+    .pipe(
+      filter(e => e.type === HttpEventType.UploadProgress || e.type === HttpEventType.Response)
+    );
+  }
 }
+

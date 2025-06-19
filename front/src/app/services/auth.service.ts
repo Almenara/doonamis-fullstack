@@ -62,8 +62,7 @@ export class AuthService {
       this._isLoggedIn.next(false);
       return;
     }
-    this.http
-      .get<UserLoginResponse>(`${environment.BACKEND_BASE_URL}/auth/check-login`,
+    this.http.get<UserLoginResponse>(`${environment.BACKEND_BASE_URL}/auth/check-login`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -86,8 +85,7 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
-    return this.http
-      .post<void>(`${environment.BACKEND_BASE_URL}/auth/logout`, {},
+    return this.http.post<void>(`${environment.BACKEND_BASE_URL}/auth/logout`, {},
         {
           headers: {
             'Content-Type': 'application/json',
