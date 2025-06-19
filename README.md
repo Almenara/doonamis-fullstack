@@ -1,14 +1,15 @@
-# Doonamis - Entorno Dockerizado (Angular + Laravel + MySQL)
+# Doonamis - Instalación Manual (Angular 20 + Laravel 12 + MySQL)
 
-Este proyecto proporciona un entorno de desarrollo completo con **Angular** (frontend), **Laravel** (backend) y **MySQL** como base de datos, todo orquestado con Docker Compose.
+Este proyecto es un stack **fullstack** con **Angular 20** (frontend), **Laravel 12** (backend) y **MySQL** como base de datos.  
+A continuación se explica cómo instalar y ejecutar el proyecto **sin Docker**.
 
 ---
 
 ## Requisitos previos
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado
-- [Node.js](https://nodejs.org/) y [npm](https://www.npmjs.com/) instalados (solo si quieres trabajar fuera de Docker)
-- [Composer](https://getcomposer.org/) instalado (solo si quieres trabajar fuera de Docker)
+- [Node.js](https://nodejs.org/) y [npm](https://www.npmjs.com/) (recomendado Node 18+)
+- [Composer](https://getcomposer.org/) (para Laravel)
+- [MySQL](https://www.mysql.com/) instalado y corriendo localmente
 
 ---
 
@@ -17,17 +18,14 @@ Este proyecto proporciona un entorno de desarrollo completo con **Angular** (fro
 ```
 doonamis/
 │
-├── back/         # Proyecto Laravel
-├── front/        # Proyecto Angular
-├── nginx/        # Configuración de Nginx
-│   └── nginx.conf
-├── docker-compose.yml
+├── back/         # Laravel 12 (backend)
+├── front/        # Angular 20 (frontend)
 └── ...
 ```
 
 ---
 
-## Primeros pasos
+## Instalación y ejecución SIN Docker
 
 ### 1. Clona el repositorio
 
@@ -36,117 +34,79 @@ git clone https://github.com/Almenara/doonamis-fullstack
 cd doonamis
 ```
 
-### 2. (Opcional) Crea los proyectos si no existen
-
-- **Angular:**  
-  ```sh
-  cd front
-  ng new . --skip-git
-  cd ..
-  ```
-
-- **Laravel:**  
-  ```sh
-  cd back
-  composer create-project laravel/laravel .
-  cd ..
-  ```
-
 ---
 
-## Cómo ejecutar solo el frontend (Angular) **sin Docker**
-
-Si solo quieres trabajar con el frontend, puedes hacerlo fácilmente sin Docker:
-
-1. Entra en la carpeta `front`:
-   ```sh
-   cd front
-   ```
-
-2. Instala las dependencias:
-   ```sh
-   npm install
-   ```
-
-3. Inicia el servidor de desarrollo en el puerto 8000:
-   ```sh
-   npm start
-   ```
-   > Esto abrirá la aplicación Angular en [http://localhost:8000](http://localhost:8000)
-
----
-
-## Ejecución completa con Docker (opcional)
-
-Si quieres levantar todo el entorno (frontend, backend y base de datos) con Docker, sigue estos pasos:
-
-### 1. Configura el archivo `.env` de Laravel
-
-Asegúrate de que el archivo `back/.env` tenga estos valores para la base de datos:
-
-```
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=doonamis_db
-DB_USERNAME=doonamis_user
-DB_PASSWORD=doonamis_pass
-```
-
-### 2. Levanta los contenedores
-
-Desde la raíz del proyecto:
+### 2. Instala y ejecuta el **Frontend** (Angular 20)
 
 ```sh
-docker compose up --build
+cd front
+npm install
+npm start
 ```
 
-Esto descargará las imágenes necesarias, construirá los servicios y levantará todo el entorno.
+- Accede a [http://localhost:8000](http://localhost:8000) para ver la aplicación Angular.
+
+---
+
+### 3. Instala y ejecuta el **Backend** (Laravel 12)
+
+```sh
+cd ../back
+composer install
+cp .env.example .env
+```
+
+- Configura el archivo `.env` con tus credenciales de MySQL locales, por ejemplo:
+
+  ```
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=doonamis_db
+  DB_USERNAME=tu_usuario
+  DB_PASSWORD=tu_contraseña
+  ```
+
+- Genera la clave de la aplicación:
+
+  ```sh
+  php artisan key:generate
+  ```
+
+- Ejecuta migraciones y seeders:
+
+  ```sh
+  php artisan migrate --seed
+  ```
+
+- Inicia el servidor de desarrollo de Laravel:
+
+  ```sh
+  php artisan serve --host=0.0.0.0 --port=8080
+  ```
+
+- El backend estará disponible en [http://localhost:8080](http://localhost:8080)
 
 ---
 
 ## Acceso a los servicios
 
-- **Frontend (Angular):**  
-  [http://localhost:8000](http://localhost:8000)
-
-- **Backend (Laravel):**  
-  [http://localhost:8080](http://localhost:8080)
-
+- **Frontend (Angular 20):** [http://localhost:8000](http://localhost:8000)
+- **Backend (Laravel 12):** [http://localhost:8080](http://localhost:8080)
 - **MySQL:**  
-  - Host: `localhost`
+  - Host: `127.0.0.1`
   - Puerto: `3306`
-  - Usuario: `doonamis_user`
-  - Contraseña: `doonamis_pass`
-  - Base de datos: `doonamis_db`
+  - Usuario y contraseña: los que configures en tu `.env`
 
 ---
 
-## Comandos útiles
+## Instalación con Docker (opcional)
 
-- **Generar la clave de Laravel (solo la primera vez):**
-  ```sh
-  docker compose exec back php artisan key:generate
-  ```
-
-- **Ejecutar migraciones de Laravel:**
-  ```sh
-  docker compose exec back php artisan migrate
-  ```
-
-- **Acceder a MySQL desde el contenedor:**
-  ```sh
-  docker compose exec mysql mysql -u doonamis_user -p
-  # Contraseña: doonamis_pass
-  ```
+Si prefieres usar Docker, consulta la sección `docker-compose.yml` y los archivos de configuración incluidos en el proyecto.
 
 ---
 
 ## Notas
 
-- Si cambias la configuración de Nginx, reinicia el servicio con:
-  ```sh
-  docker compose restart nginx
-  ```
-- Puedes acceder directamente al frontend en [http://localhost:8000](http://localhost:8000) y al backend en [http://localhost:8080](http://localhost:8080) si lo necesitas.
-
+- Si modificas el frontend o backend, reinicia sus servidores para ver los cambios.
+- Asegúrate de que la base de datos MySQL esté creada y accesible antes de ejecutar migraciones.
